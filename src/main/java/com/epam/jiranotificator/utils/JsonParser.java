@@ -1,5 +1,7 @@
 package com.epam.jiranotificator.utils;
 
+import java.util.Iterator;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -17,7 +19,10 @@ public class JsonParser {
 		if (!jsonFromJira.isEmpty()) {
 			issues = (JSONArray) jsonFromJira.get("issues");
 			
-			JSONObject issue = (JSONObject) issues.get(0); 
+			Iterator<JSONObject> iterator = issues.iterator();
+			while (iterator.hasNext()) {
+				
+			JSONObject issue = (JSONObject) iterator.next(); 
 						
 			fields = (JSONObject) issue.get("fields");
 			JSONObject priority = (JSONObject) fields.get("priority");
@@ -27,6 +32,7 @@ public class JsonParser {
 			issueDTO.setDescription((String) fields.get("description"));
 			
 			return issueDTO;
+			}
 		}
 		return null;
 	}
