@@ -13,6 +13,7 @@
         <gcm.server.version>1.0.2</gcm.server.version>
         <json.simple.version>1.1.1</json.simple.version>
         <slf4j.version>1.7.12</slf4j.version>
+        <spring.boot.version>1.2.3.RELEASE</spring.boot.version>
     </properties>
 
     <dependencies>
@@ -22,7 +23,19 @@
             <artifactId>spring-context</artifactId>
             <version>${spring.context.version}</version>
         </dependency>
-
+        
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.context.version}</version>
+		</dependency>
+		
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<version>${spring.boot.version}</version>
+        </dependency>
+		
         <dependency>
             <groupId>com.ganyo</groupId>
             <artifactId>gcm-server</artifactId>
@@ -42,7 +55,14 @@
         </dependency>
 
     </dependencies>
-
+	<build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 *.class
 
 # Mobile Tools for Java (J2ME)
@@ -11,3 +12,15 @@
 /.classpath
 /.project
 /.settings
+=======
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+/target/
+>>>>>>> f6b6772d1cd8306e4862d6dbcdb5c230b8396e28
