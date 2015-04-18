@@ -12,8 +12,8 @@ import static org.junit.Assert.assertTrue;
 @RunWith(MockitoJUnitRunner.class)
 public class CryptServiceTest {
 
-    private final String TEST_SALT = "test_salt";
-    private final String CURRENT_PASSWORD = "Qwerty123";
+    private static final String TEST_SALT = "test_salt";
+    private static final String CURRENT_PASSWORD = "Qwerty123";
 
     private CryptService cryptService;
 
