@@ -11,7 +11,6 @@
 
     <bean id = "cryptService" class="com.epam.jiranotificator.service.CryptService">
         <constructor-arg value="${password}"/>
-        <constructor-arg value="${salt}"/>
     </bean>
 
 </beans>

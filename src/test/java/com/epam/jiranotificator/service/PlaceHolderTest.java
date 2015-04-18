@@ -18,10 +18,9 @@ public class PlaceHolderTest {
     @Test
     public void shouldReadJiraPropertyFileAndVerifyParameters(){
         final CryptService cryptService = applicationContext.getBean(CryptService.class);
-        final String encrypted = cryptService.encrypted();
+        final String decode = cryptService.decode();
 
-        boolean isPasswordValid = cryptService.isPasswordValid(INPUT_PASSWORD, encrypted);
-        assertTrue("Input Password should be valid",isPasswordValid);
+        assertTrue("Input Password should be valid", INPUT_PASSWORD.equals(decode));
     }
 
 

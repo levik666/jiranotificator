@@ -12,35 +12,33 @@ import static org.junit.Assert.assertTrue;
 @RunWith(MockitoJUnitRunner.class)
 public class CryptServiceTest {
 
-    private static final String TEST_SALT = "test_salt";
     private static final String CURRENT_PASSWORD = "Qwerty123";
+    private static final String ENCODE_PASSWORD = "UXdlcnR5MTIz";
+
+    private static final String INCORRECT_ENCODE_PASSWORD = "UXklcnR5MTIz";
 
     private CryptService cryptService;
 
     @Before
     public void setUp() {
-        cryptService = new CryptService(CURRENT_PASSWORD, TEST_SALT);
+        cryptService = new CryptService(CURRENT_PASSWORD);
     }
 
     @Test
-    public void shouldSuccessPerformEncrypedAndValidatePassword() throws Exception {
-        final String inputPassword = "Qwerty123";
-        final String encrypted = cryptService.encrypted();
-        boolean isPasswordValid = cryptService.isPasswordValid(inputPassword, encrypted);
-        assertTrue("Input Password should be valid",isPasswordValid);
+    public void shouldSuccessPerformEncodeAndValidatePassword() throws Exception {
+        String encode = cryptService.encode();
+        assertTrue("Input Password should be valid", ENCODE_PASSWORD.equals(encode));
     }
 
     @Test
-    public void shouldSuccessPerformEncrypedAndItNotBeNull() throws Exception {
-        final String encrypted = cryptService.encrypted();
-        assertNotNull("Encrypted password should be not null", encrypted);
+    public void shouldSuccessPerformEncodeAndItNotBeNull() throws Exception {
+        String encode = cryptService.encode();
+        assertNotNull("Encode password should be not null", encode);
     }
 
     @Test
-    public void shouldPerformEncrypedAndValidationPasswordFailed() throws Exception {
-        final String inputPassword = "Qwerty12";
-        final String encrypted = cryptService.encrypted();
-        boolean isPasswordValid = cryptService.isPasswordValid(inputPassword, encrypted);
-        assertFalse("Input Password should be failed due to incorect password", isPasswordValid);
+    public void shouldPerformEncodeAndValidationPasswordFailed() throws Exception {
+        String encode = cryptService.encode();
+        assertFalse("Input Password should be failed due to incorect password", INCORRECT_ENCODE_PASSWORD.equals(encode));
     }
 }
