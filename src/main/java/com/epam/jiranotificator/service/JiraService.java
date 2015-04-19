@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -32,15 +33,14 @@ public class JiraService {
     @Value("${login}")
     private String login;
 
-    @Value("${password}")
-    private String password;
-
     @Value("${url}")
     private String url;
 
-    public JiraService(String login, String password, String url) {
+    @Autowired
+    private CryptService cryptService;
+
+    public JiraService(final String login, final String url) {
         this.login = login;
-        this.password = password;
         this.url = url;
     }
 
@@ -53,23 +53,23 @@ public class JiraService {
      * @throws URISyntaxException
      * @throws IOException
      */
-    public Set<Issue> getIssuesByQuery(String searchQuery)
-            throws URISyntaxException, IOException {
-        Set<Issue> issues = new HashSet<Issue>();
-        AsynchronousJiraRestClientFactory factory = new AsynchronousJiraRestClientFactory();
-        URI jiraServerUri = new URI(url);
+    public Set<Issue> getIssuesByQuery(final String searchQuery) throws IOException, URISyntaxException {
+        final AsynchronousJiraRestClientFactory factory = new AsynchronousJiraRestClientFactory();
+        final URI jiraServerUri = new URI(url);
 
-        JiraRestClient restClient = factory.createWithBasicHttpAuthentication(
-                jiraServerUri, login, password);
-        final Promise<SearchResult> searchResalt = restClient.getSearchClient()
-                .searchJql(searchQuery);
-        Iterator<Issue> issueIterator = searchResalt.claim().getIssues()
-                .iterator();
-        while (issueIterator.hasNext()) {
-            issues.add(issueIterator.next());
+        try(JiraRestClient restClient = factory.createWithBasicHttpAuthentication(
+                jiraServerUri, login, cryptService.decode())){
+
+            final Promise<SearchResult> searchResult = restClient.getSearchClient()
+                    .searchJql(searchQuery);
+            final Set<Issue> issues = new HashSet<>();
+
+            for (Issue issue : searchResult.claim().getIssues()) {
+                issues.add(issue);
+            }
+
+            return issues;
         }
-        restClient.close();
-        return issues;
     }
 
 }

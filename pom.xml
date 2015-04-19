@@ -18,6 +18,8 @@
         <commons.codec.version>1.4</commons.codec.version>
         <mockito.core.version>1.9.5</mockito.core.version>
 		<atlassian.jira.version>2.0.0-m25</atlassian.jira.version>
+		<maven.compiler.plugin.version>3.2</maven.compiler.plugin.version>
+		<java.version>1.7</java.version>
     </properties>
 
 	<dependencies>
@@ -81,7 +83,6 @@
 			<groupId>com.atlassian.jira</groupId>
 			<artifactId>jira-rest-java-client-core</artifactId>
 			<version>${atlassian.jira.version}</version>
-			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>
@@ -90,6 +91,14 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
