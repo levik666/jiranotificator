@@ -68,7 +68,7 @@ public class JiraService {
         while (issueIterator.hasNext()) {
             issues.add(issueIterator.next());
         }
-//        restClient.close();
+        restClient.close();
         return issues;
     }
 
