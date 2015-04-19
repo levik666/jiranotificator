@@ -8,10 +8,12 @@
       http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:property-placeholder location="classpath:jira.properties" />
+    
+    <context:component-scan base-package="com.epam.jiranotificator.service" />
 
     <bean id = "cryptService" class="com.epam.jiranotificator.service.CryptService">
         <constructor-arg value="${password}"/>
         <constructor-arg value="${salt}"/>
     </bean>
-
+    
 </beans>

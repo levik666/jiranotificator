@@ -1,60 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.epam.jiranotificator</groupId>
-    <artifactId>jiranotificator</artifactId>
-    <version>1.0-SNAPSHOT</version>
+	<groupId>com.epam.jiranotificator</groupId>
+	<artifactId>jiranotificator</artifactId>
+	<version>1.0-SNAPSHOT</version>
 
     <properties>
         <spring.context.version>4.1.6.RELEASE</spring.context.version>
+        <spring.web.version>4.1.6.RELEASE</spring.web.version>
+        <spring.webmvc.version>4.1.0.RELEASE</spring.webmvc.version>
         <gcm.server.version>1.0.2</gcm.server.version>
         <json.simple.version>1.1.1</json.simple.version>
         <slf4j.version>1.7.12</slf4j.version>
         <spring.boot.version>1.2.3.RELEASE</spring.boot.version>
         <commons.codec.version>1.4</commons.codec.version>
         <mockito.core.version>1.9.5</mockito.core.version>
+		<atlassian.jira.version>2.0.0-m25</atlassian.jira.version>
     </properties>
 
-    <dependencies>
+	<dependencies>
 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.context.version}</version>
-        </dependency>
-        
-        <dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
+			<artifactId>spring-context</artifactId>
 			<version>${spring.context.version}</version>
 		</dependency>
-		
+
 		<dependency>
-            <groupId>org.springframework.boot</groupId>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.web.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.webmvc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<version>${spring.boot.version}</version>
-        </dependency>
-		
-        <dependency>
-            <groupId>com.ganyo</groupId>
-            <artifactId>gcm-server</artifactId>
-            <version>${gcm.server.version}</version>
-        </dependency>
+		</dependency>
 
-        <dependency>
-            <groupId>com.googlecode.json-simple</groupId>
-            <artifactId>json-simple</artifactId>
-            <version>${json.simple.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>com.ganyo</groupId>
+			<artifactId>gcm-server</artifactId>
+			<version>${gcm.server.version}</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>${json.simple.version}</version>
+		</dependency>
 
         <dependency>
             <groupId>commons-codec</groupId>
@@ -69,15 +71,32 @@
             <scope>test</scope>
         </dependency>
 
-    </dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.atlassian.jira</groupId>
+			<artifactId>jira-rest-java-client-core</artifactId>
+			<version>${atlassian.jira.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+	</dependencies>
 	<build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
-
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+	<repositories>
+		<repository>
+			<id>opencast-public</id>
+			<url>http://repository.opencastproject.org/nexus/content/repositories/public/</url>
+		</repository>
+	</repositories>
 </project>
