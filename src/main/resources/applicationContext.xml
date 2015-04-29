@@ -1,18 +1,50 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="
       http://www.springframework.org/schema/beans
       http://www.springframework.org/schema/beans/spring-beans.xsd
       http://www.springframework.org/schema/context
-      http://www.springframework.org/schema/context/spring-context.xsd">
+      http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean class = "com.epam.jiranotificator.configuration.postprocessor.PasswordEncodeAnnotationBeanPostProcessor"/>
 
     <context:property-placeholder location="classpath:jira.properties" />
     
     <context:component-scan base-package="com.epam.jiranotificator.service" />
+    <context:component-scan base-package="com.epam.jiranotificator.controller" />
+    <context:component-scan base-package="com.epam.jiranotificator.configuration" />
 
-    <bean id = "cryptService" class="com.epam.jiranotificator.service.CryptService">
-        <constructor-arg value="${password}"/>
+    <aop:aspectj-autoproxy />
+
+    <bean id = "jiraService" class="com.epam.jiranotificator.service.impl.JiraService">
+        <constructor-arg name="login" value="${login}" />
+        <constructor-arg name="password" value="${password}" />
+        <constructor-arg name="url" value="${url}" />
+        <constructor-arg name="query" value="${query}" />
     </bean>
-    
+
+    <bean id = "jiraRestClientFactory" class = "com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory" />
+
+    <bean id = "issueCacheService" class="com.epam.jiranotificator.service.impl.IssueCacheService">
+        <constructor-arg name="duration" value="${cache.duration}" />
+        <constructor-arg name="unit" type="java.util.concurrent.TimeUnit" value="${cache.timeUnit}"/>
+        <constructor-arg name="size" value="${cache.size}" />
+    </bean>
+
+    <bean id = "gcmSender" class="com.google.android.gcm.server.Sender">
+        <constructor-arg name="key" value="${gcm.serverKey}"/>
+    </bean>
+
+    <bean id = "gcmNotificationSender" class="com.epam.jiranotificator.service.impl.GCMNotificationSender">
+        <constructor-arg name="regIds" value="${gcm.regIds}"/>
+        <constructor-arg name="timeToLive" value="${gcm.timeToLive}" />
+        <constructor-arg name="retries" value="${gcm.retries}" />
+    </bean>
+
+    <bean id= "routingJiraIssueService" class="com.epam.jiranotificator.service.impl.RoutingJiraIssueService">
+        <constructor-arg name="status" value="${status}"/>
+    </bean>
+
 </beans>

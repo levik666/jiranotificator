@@ -11,6 +11,7 @@
         <spring.context.version>4.1.6.RELEASE</spring.context.version>
         <spring.web.version>4.1.6.RELEASE</spring.web.version>
         <spring.webmvc.version>4.1.0.RELEASE</spring.webmvc.version>
+		<spring.aop.version>4.1.6.RELEASE</spring.aop.version>
         <gcm.server.version>1.0.2</gcm.server.version>
         <json.simple.version>1.1.1</json.simple.version>
         <slf4j.version>1.7.12</slf4j.version>
@@ -20,6 +21,13 @@
 		<atlassian.jira.version>2.0.0-m25</atlassian.jira.version>
 		<maven.compiler.plugin.version>3.2</maven.compiler.plugin.version>
 		<java.version>1.7</java.version>
+		<cpsuite.version>1.2.5</cpsuite.version>
+		<aspectjrt.version>1.6.11</aspectjrt.version>
+		<guava.version>16.0.1</guava.version>
+		<ant-junit.version>1.6.2</ant-junit.version>
+		<maven-site-plugin.version>3.0-beta-2</maven-site-plugin.version>
+		<maven-jxr-plugin.version>2.1</maven-jxr-plugin.version>
+		<maven-checkstyle-plugin.version>2.6</maven-checkstyle-plugin.version>
     </properties>
 
 	<dependencies>
@@ -34,6 +42,18 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 			<version>${spring.web.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${aspectjrt.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectjrt.version}</version>
 		</dependency>
 
 		<dependency>
@@ -66,12 +86,11 @@
             <version>${commons.codec.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>${mockito.core.version}</version>
-            <scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -83,6 +102,27 @@
 			<groupId>com.atlassian.jira</groupId>
 			<artifactId>jira-rest-java-client-core</artifactId>
 			<version>${atlassian.jira.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>${mockito.core.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>cpsuite</groupId>
+			<artifactId>cpsuite</artifactId>
+			<version>${cpsuite.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<version>${spring.boot.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 	</dependencies>
@@ -100,12 +140,80 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>test-reports</id>
+						<phase>test</phase>
+						<configuration>
+							<tasks>
+								<junitreport todir="target/surefire-reports">
+									<fileset dir="target/surefire-reports">
+										<include name="**/*.xml"/>
+									</fileset>
+									<report format="noframes" todir="target/surefire-reports"/>
+								</junitreport>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>ant</groupId>
+						<artifactId>ant-junit</artifactId>
+						<version>${ant-junit.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<!-- Plugin that gives ability to generate your projects site -->
+				<artifactId>maven-site-plugin</artifactId>
+				<version>${maven-site-plugin.version}</version>
+				<configuration>
+					<!-- Reports that will be displayed on a generated site -->
+					<reportPlugins>
+						<!-- Produces a cross-reference of the project's sources. This is useful
+                            for other reports like PMD or Checkstyle. When this plugin is used with
+                            checkstyle you can see code that produces style warning/error in the report. -->
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-jxr-plugin</artifactId>
+							<version>${maven-jxr-plugin.version}</version>
+							<configuration>
+								<aggregate>true</aggregate>
+							</configuration>
+						</plugin>
+						<!-- Checks projects code conventions -->
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-checkstyle-plugin</artifactId>
+							<version>${maven-checkstyle-plugin.version}</version>
+							<configuration>
+								<configLocation>/media/levik/data/work/jiranotificator/check_style.xml</configLocation>
+							</configuration>
+						</plugin>
+					</reportPlugins>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<repositories>
 		<repository>
 			<id>opencast-public</id>
 			<url>http://repository.opencastproject.org/nexus/content/repositories/public/</url>
+		</repository>
+		<repository>
+			<id>http://maven.xwiki.org</id>
+			<url>http://maven.xwiki.org/externals</url>
+		</repository>
+		<repository>
+			<id>gcm-server-repository</id>
+			<url>https://raw.githubusercontent.com/slorber/gcm-server-repository/master/releases/</url>
 		</repository>
 	</repositories>
 </project>
