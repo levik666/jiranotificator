@@ -4,13 +4,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import com.atlassian.jira.rest.client.api.JiraRestClient;
@@ -20,20 +17,18 @@ import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientF
 import com.atlassian.util.concurrent.Promise;
 
 /**
- * Jira utils
+ * Jira Service
  * 
  * @author Bohdan_Kolesnyk
  *
  */
-@Configuration
-@PropertySource("classpath:jira.properties")
 @Service
 public class JiraService {
 
-    @Value("${login}")
+    @Value("${jira.login}")
     private String login;
 
-    @Value("${url}")
+    @Value("${jira.url}")
     private String url;
 
     @Autowired

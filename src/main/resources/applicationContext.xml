@@ -15,7 +15,7 @@
     <context:component-scan base-package="com.epam.jiranotificator.service" />
 
     <bean id = "cryptService" class="com.epam.jiranotificator.service.CryptService">
-        <constructor-arg value="${password}"/>
+        <constructor-arg value="${jira.password}"/>
     </bean>
 
 	<!-- For running schedule tasks -->
