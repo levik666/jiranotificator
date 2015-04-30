@@ -34,7 +34,7 @@
     </bean>
 
     <bean id = "gcmSender" class="com.google.android.gcm.server.Sender">
-        <constructor-arg name="key" value="${gcm.serverKey}"/>
+        <constructor-arg name="key" value="${gcm.apiKey}"/>
     </bean>
 
     <bean id = "gcmNotificationSender" class="com.epam.jiranotificator.service.impl.GCMNotificationSender">
