@@ -8,23 +8,23 @@
 	<version>1.0-SNAPSHOT</version>
 
     <properties>
-        <spring.context.version>4.1.6.RELEASE</spring.context.version>
-        <spring.web.version>4.1.6.RELEASE</spring.web.version>
-        <spring.webmvc.version>4.1.0.RELEASE</spring.webmvc.version>
-		<spring.aop.version>4.1.6.RELEASE</spring.aop.version>
-        <gcm.server.version>1.0.2</gcm.server.version>
-        <json.simple.version>1.1.1</json.simple.version>
-        <slf4j.version>1.7.12</slf4j.version>
-        <spring.boot.version>1.2.3.RELEASE</spring.boot.version>
+		<spring.boot.version>1.2.3.RELEASE</spring.boot.version>
+
+		<gcm.server.version>1.0.2</gcm.server.version>
+		<slf4j.version>1.7.12</slf4j.version>
         <commons.codec.version>1.4</commons.codec.version>
-        <mockito.core.version>1.9.5</mockito.core.version>
 		<atlassian.jira.version>2.0.0-m25</atlassian.jira.version>
-		<maven.compiler.plugin.version>3.2</maven.compiler.plugin.version>
-		<java.version>1.7</java.version>
-		<cpsuite.version>1.2.5</cpsuite.version>
-		<aspectjrt.version>1.6.11</aspectjrt.version>
 		<guava.version>16.0.1</guava.version>
+		<aspectjrt.version>1.6.11</aspectjrt.version>
+
+		<mockito.core.version>1.9.5</mockito.core.version>
+		<cpsuite.version>1.2.5</cpsuite.version>
+
 		<ant-junit.version>1.6.2</ant-junit.version>
+
+		<java.version>1.7</java.version>
+
+		<maven.compiler.plugin.version>3.2</maven.compiler.plugin.version>
 		<maven-site-plugin.version>3.0-beta-2</maven-site-plugin.version>
 		<maven-jxr-plugin.version>2.1</maven-jxr-plugin.version>
 		<maven-checkstyle-plugin.version>2.6</maven-checkstyle-plugin.version>
@@ -33,15 +33,9 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring.context.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>${spring.web.version}</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<version>${spring.boot.version}</version>
 		</dependency>
 
 		<dependency>
@@ -57,27 +51,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${spring.webmvc.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-			<version>${spring.boot.version}</version>
-		</dependency>
-
-		<dependency>
 			<groupId>com.ganyo</groupId>
 			<artifactId>gcm-server</artifactId>
 			<version>${gcm.server.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.googlecode.json-simple</groupId>
-			<artifactId>json-simple</artifactId>
-			<version>${json.simple.version}</version>
 		</dependency>
 
         <dependency>
@@ -103,6 +79,8 @@
 			<artifactId>jira-rest-java-client-core</artifactId>
 			<version>${atlassian.jira.version}</version>
 		</dependency>
+
+		<!-- Dependency for testing purpose -->
 
 		<dependency>
 			<groupId>org.mockito</groupId>
