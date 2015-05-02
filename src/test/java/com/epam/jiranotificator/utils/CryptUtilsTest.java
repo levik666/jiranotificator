@@ -13,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 public class CryptUtilsTest {
 
     private static final String CURRENT_PASSWORD = "Qwerty123";
-    private static final String ENCODE_PASSWORD = "UXdlcnR5MTIz";
+    private static final String ENCODE_PASSWORD = "UTNSamJ5MUZZMjl0WDBWd1lXMWZNakF4TlE9PTE2OTE1MzkzNTFRd2VydHkxMjM=";
 
     private static final String INCORRECT_ENCODE_PASSWORD = "UXklcnR5MTIz";
 
