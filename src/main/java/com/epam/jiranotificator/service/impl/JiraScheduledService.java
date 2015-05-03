@@ -37,6 +37,7 @@ public class JiraScheduledService implements ScheduledService {
         for(final Issue issue : issues){
             final String ticketNumber = issue.getKey();
             if (routingJiraIssueService.isSendNotification(issue)){
+                LOG.debug("Issue [" + ticketNumber + "] found.");
                 final Issue cacheIssue = memoryCacheService.get(ticketNumber);
                 if (cacheIssue == null){
                     eventPublisher.publish(issue);
@@ -44,6 +45,7 @@ public class JiraScheduledService implements ScheduledService {
                     LOG.debug("Publish event and add to cache issue [" + ticketNumber + "] ");
                     continue;
                 }
+                LOG.debug("Issue [" + ticketNumber + "] available in cache.");
             }
             LOG.debug("Issue [" + ticketNumber + "] do nothing due to lover priority");
         }

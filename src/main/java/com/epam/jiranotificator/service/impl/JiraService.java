@@ -9,6 +9,8 @@ import java.util.Set;
 import com.epam.jiranotificator.configuration.annotations.PasswordEncode;
 import com.epam.jiranotificator.configuration.annotations.AlertNotification;
 import com.epam.jiranotificator.exception.JiraException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ import com.atlassian.util.concurrent.Promise;
 
 @Service("jiraService")
 public class JiraService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(JiraService.class);
 
     private final String login;
     private final String url;
@@ -41,16 +45,21 @@ public class JiraService {
     public Set<Issue> getIssues() {
         try{
             final URI jiraServerUri = new URI(url);
+            LOG.debug("jiraServerUri is " + jiraServerUri + ", login is " + login);
             try(JiraRestClient restClient = jiraRestClientFactory.createWithBasicHttpAuthentication(
                     jiraServerUri, login, password)){
+
+                LOG.debug("query is " + query);
 
                 final Promise<SearchResult> searchResult = restClient.getSearchClient().searchJql(query);
                 final Set<Issue> issues = new HashSet<>();
 
-                for (Issue issue : searchResult.claim().getIssues()) {
+                for (final Issue issue : searchResult.claim().getIssues()) {
+                    LOG.debug("issue is " + issue);
                     issues.add(issue);
                 }
 
+                LOG.debug("issues size is " + issues.size());
                 return issues;
             }
         } catch (IOException | URISyntaxException exe) {
