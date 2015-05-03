@@ -1,5 +1,0 @@
-mvn test - run all test and publish report to target/surefire-reports folder
-
-Before run this command add some modification to pom.xml add your real path to check_style.xml with out this changes "site" is failed.
-
-mvn clean site- run checkstyle and publish report to turget/site folder
