@@ -49,13 +49,13 @@ public class JiraService {
             try(JiraRestClient restClient = jiraRestClientFactory.createWithBasicHttpAuthentication(
                     jiraServerUri, login, password)){
 
-                LOG.debug("query is " + query);
+                LOG.debug("Get list of issue by query is " + query);
 
                 final Promise<SearchResult> searchResult = restClient.getSearchClient().searchJql(query);
                 final Set<Issue> issues = new HashSet<>();
 
                 for (final Issue issue : searchResult.claim().getIssues()) {
-                    LOG.debug("issue is " + issue);
+                    LOG.debug("issue is " + issue.getKey());
                     issues.add(issue);
                 }
 
