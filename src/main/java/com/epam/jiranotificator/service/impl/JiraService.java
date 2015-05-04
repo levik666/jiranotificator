@@ -8,7 +8,9 @@ import java.util.Set;
 
 import com.epam.jiranotificator.configuration.annotations.PasswordEncode;
 import com.epam.jiranotificator.configuration.annotations.AlertNotification;
+import com.epam.jiranotificator.configuration.context.JiraEventPublisher;
 import com.epam.jiranotificator.exception.JiraException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,9 @@ public class JiraService {
 
     @Autowired
     private AsynchronousJiraRestClientFactory jiraRestClientFactory;
+    
+    @Autowired
+    JiraEventPublisher jiraEventPublisher;
 
     public JiraService(final String login, final String url, final String password, final String query) {
         this.login = login;
@@ -63,6 +68,7 @@ public class JiraService {
                 return issues;
             }
         } catch (IOException | URISyntaxException exe) {
+            jiraEventPublisher.publish("Jira connection alert", "JiraService can't establish connection with Jira");
             throw new JiraException("Can't perform query " + query + ". Get error message " + exe.getMessage(), exe);
         }
     }

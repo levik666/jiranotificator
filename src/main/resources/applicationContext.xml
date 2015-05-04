@@ -46,5 +46,12 @@
     <bean id= "routingJiraIssueService" class="com.epam.jiranotificator.service.impl.RoutingJiraIssueService">
         <constructor-arg name="status" value="${status}"/>
     </bean>
+    
+    <bean id = "emailSender" class="com.epam.jiranotificator.service.impl.EmailSender">
+        <constructor-arg name="emailFrom" value="${jira.alert.emailFrom}" />
+        <constructor-arg name="emailTo" value="${jira.alert.emailTo}" />
+        <constructor-arg name="emailLogin" value="${jira.alert.emailLogin}" />
+        <constructor-arg name="emailPassword" value="${jira.alert.emailPassword}" />
+    </bean>
 
 </beans>
