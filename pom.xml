@@ -58,17 +58,21 @@
 		<slf4j.version>1.7.12</slf4j.version>
         <commons.codec.version>1.4</commons.codec.version>
 		<atlassian.jira.version>2.0.0-m25</atlassian.jira.version>
-		<guava.version>16.0.1</guava.version>
-		<aspectjrt.version>1.6.11</aspectjrt.version>
+		<guava.version>18.0</guava.version>
+		<aspectjrt.version>1.8.5</aspectjrt.version>
 
-		<mockito.core.version>1.9.5</mockito.core.version>
+		<mockito.core.version>2.0.7-beta</mockito.core.version>
 		<cpsuite.version>1.2.5</cpsuite.version>
 
-		<ant-junit.version>1.6.2</ant-junit.version>
+		<ant-junit.version>1.6.5</ant-junit.version>
 
 		<java.version>1.7</java.version>
 
-		<maven.compiler.plugin.version>3.2</maven.compiler.plugin.version>
+		<maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
+		<maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
+		<maven-checkstyle-plugin.version>2.15</maven-checkstyle-plugin.version>
+
+		<!--TODO Will be updated or removed -->
 		<maven-site-plugin.version>3.0-beta-2</maven-site-plugin.version>
 		<maven-jxr-plugin.version>2.1</maven-jxr-plugin.version>
 		<maven-checkstyle-plugin.version>2.6</maven-checkstyle-plugin.version>
