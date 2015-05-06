@@ -47,11 +47,24 @@
         <constructor-arg name="status" value="${status}"/>
     </bean>
     
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="${jira.alert.emailLogin}"/>
+		<property name="password" value="${jira.alert.emailPassword}" />
+	 
+		<property name="javaMailProperties">
+		   <props>
+	       	      <prop key="mail.smtp.auth">true</prop>
+	       	      <prop key="mail.smtp.starttls.enable">true</prop>
+	       	   </props>
+		</property>
+	</bean>
+	
     <bean id = "emailSender" class="com.epam.jiranotificator.service.impl.EmailSender">
-        <constructor-arg name="emailFrom" value="${jira.alert.emailFrom}" />
-        <constructor-arg name="emailTo" value="${jira.alert.emailTo}" />
-        <constructor-arg name="emailLogin" value="${jira.alert.emailLogin}" />
-        <constructor-arg name="emailPassword" value="${jira.alert.emailPassword}" />
+		<property name="mailSender" ref="mailSender" />
+        <property name="emailFrom" value="${jira.alert.emailFrom}" />
+        <property name="emailTo" value="${jira.alert.emailTo}" />
     </bean>
 
 </beans>
