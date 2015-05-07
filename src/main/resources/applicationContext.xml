@@ -55,6 +55,7 @@
 	 
 		<property name="javaMailProperties">
 		   <props>
+		   		  <prop key="mail.transport.protocol">smtp</prop>
 	       	      <prop key="mail.smtp.auth">true</prop>
 	       	      <prop key="mail.smtp.starttls.enable">true</prop>
 	       	   </props>
@@ -64,7 +65,7 @@
     <bean id = "emailSender" class="com.epam.jiranotificator.service.impl.EmailSender">
 		<property name="mailSender" ref="mailSender" />
         <property name="emailFrom" value="${jira.alert.emailFrom}" />
-        <property name="emailTo" value="${jira.alert.emailTo}" />
+        <property name="emailsTo" value="${jira.alert.emailsTo}" />
     </bean>
 
 </beans>

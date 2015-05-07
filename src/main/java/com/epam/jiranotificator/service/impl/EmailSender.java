@@ -1,5 +1,7 @@
 package com.epam.jiranotificator.service.impl;
 
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.MailSender;
@@ -48,6 +50,6 @@ public class EmailSender {
 		message.setSubject(subject);
 		message.setText(msg);
 		mailSender.send(message);
-		LOG.debug("Email to " + emailsTo.toString() + " sent.");
+		LOG.debug("Email to " + Arrays.toString(emailsTo) + " sent.");
 	}
 }
