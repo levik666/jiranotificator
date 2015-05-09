@@ -41,7 +41,7 @@ public class JiraService {
         this.query = query;
     }
 
-    @AlertNotification
+    @AlertNotification(name = "[Jiranotificator ERROR]")
     public Set<Issue> getIssues() {
         try{
             final URI jiraServerUri = new URI(url);
