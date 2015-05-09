@@ -45,12 +45,13 @@ public class NotificationInterceptor {
         final String methodName = signature.getName();
         final String stuff = signature.toString();
         final String arguments = Arrays.toString(joinPoint.getArgs());
-		final String message = new StringBuilder()
-				.append("We have caught exception in method: ")
-				.append(methodName).append(" with arguments ")
-				.append(arguments).append("\nand the full toString: ")
-				.append(stuff).append("\nthe exception is: ")
-				.append(exe.getMessage()).toString();
+
+        final String message = "We have caught exception in method: " + methodName +
+                " with arguments " + arguments +
+                " and the full toString: " + stuff +
+                " the exception is: " + exe.getMessage();
+
+        LOG.error(message);
 	    
 		jiraEventPublisher.publish(subject, message);
         LOG.debug("Send mail with error message: " + message);

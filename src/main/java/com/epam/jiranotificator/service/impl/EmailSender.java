@@ -42,9 +42,9 @@ public class EmailSender {
 	 * @param msg
 	 */
 	public void send(String subject, String msg) {
- 
+
 		SimpleMailMessage message = new SimpleMailMessage();
- 
+
 		message.setFrom(emailFrom);
 		message.setTo(emailsTo);
 		message.setSubject(subject);
