@@ -33,14 +33,13 @@
         <constructor-arg name="size" value="${cache.size}" />
     </bean>
 
-    <bean id = "gcmSender" class="com.google.android.gcm.server.Sender">
-        <constructor-arg name="key" value="${gcm.apiKey}"/>
-    </bean>
+    <bean id = "httpClient" class="org.apache.http.impl.client.DefaultHttpClient"/>
 
     <bean id = "gcmNotificationSender" class="com.epam.jiranotificator.service.impl.GCMNotificationSender">
-        <constructor-arg name="regIds" value="${gcm.regIds}"/>
-        <constructor-arg name="timeToLive" value="${gcm.timeToLive}" />
-        <constructor-arg name="retries" value="${gcm.retries}" />
+        <constructor-arg name="host" value="${gcm.host}"/>
+        <constructor-arg name="contentType" value="${gcm.content_type}" />
+        <constructor-arg name="xPushbotsAppid" value="${gcm.x_pushbots_appid}" />
+        <constructor-arg name="xPushbotsSecret" value="${gcm.x_pushbots_secret}" />
     </bean>
 
     <bean id= "routingJiraIssueService" class="com.epam.jiranotificator.service.impl.RoutingJiraIssueService">
