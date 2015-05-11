@@ -6,10 +6,10 @@ public class Message implements Serializable {
 
     //default 1 - android
     private int platform = 1;
-    private String message;
+    private String msg;
 
-    public Message(final String message) {
-        this.message = message;
+    public Message(final String msg) {
+        this.msg = msg;
     }
 
     public int getPlatform() {
@@ -20,16 +20,16 @@ public class Message implements Serializable {
         this.platform = platform;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     @Override
     public String toString() {
-        return "{ platform :" + platform + ", msg : " + message + "}";
+        return "{ platform :" + platform + ", msg : " + msg + "}";
     }
 }

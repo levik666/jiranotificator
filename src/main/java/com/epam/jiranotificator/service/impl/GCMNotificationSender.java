@@ -61,19 +61,14 @@ public class GCMNotificationSender implements GCMSender {
             post.setHeader(X_PUSHBOTS_APPID, xPushbotsAppid);
             post.setHeader(X_PUSHBOTS_SECRET, xPushbotsSecret);
             post.setHeader(CONTENT_TYPE, contentType);
-            post.addHeader(ACCEPT, contentType);
 
             try {
                 final String jsonMessage = new ObjectMapper().writeValueAsString(message);
                 post.setEntity(new StringEntity(jsonMessage, ContentType.create(contentType)));
-
-                post.addHeader(MESSAGE, jsonMessage);
-
-                //TODO investigate why 409 error appeared
                 final HttpResponse response = httpClient.execute(post);
 
                 if (response.getStatusLine().getStatusCode() != 200){
-                    LOG.error("Can't send message, response " + response.toString());
+                    LOG.error("Can't send message, response " + response.toString() + " , to issue " + issue.getKey());
                     return ;
                 }
 
