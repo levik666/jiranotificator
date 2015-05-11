@@ -2,11 +2,7 @@ package com.epam.jiranotificator.service;
 
 import com.atlassian.jira.rest.client.api.domain.Issue;
 import com.epam.jiranotificator.exception.GCMException;
-import com.epam.jiranotificator.exception.JiraException;
 import com.epam.jiranotificator.service.impl.GCMNotificationSender;
-import com.google.android.gcm.server.Message;
-import com.google.android.gcm.server.MulticastResult;
-import com.google.android.gcm.server.Sender;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -32,9 +28,7 @@ public class GCMNotificationSenderTest {
     private final int timeToLive = 30;
     private final int retries = 5;
 
-    @Mock
-    private Sender sender;
-    @Spy
+    /*@Spy
     @InjectMocks
     private GCMNotificationSender gcmNotificationSender = new GCMNotificationSender(regIds, timeToLive, retries);
 
@@ -59,7 +53,7 @@ public class GCMNotificationSenderTest {
         when(issue.getKey()).thenReturn(TICKET_NUMBER);
         doThrow(new GCMException("Can't send", new Throwable())).when(gcmNotificationSender).send(issue);
         gcmNotificationSender.send(issue);
-    }
+    }*/
 
 /*    @Test(expected = GCMException.class)
     public void shouldThrowExceptionWhenPerformSendMessage() throws IOException {

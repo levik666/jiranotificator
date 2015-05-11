@@ -54,7 +54,6 @@
     <properties>
 		<spring.boot.version>1.2.3.RELEASE</spring.boot.version>
 
-		<gcm.server.version>1.0.2</gcm.server.version>
 		<slf4j.version>1.7.12</slf4j.version>
         <commons.codec.version>1.4</commons.codec.version>
 		<atlassian.jira.version>2.0.0-m25</atlassian.jira.version>
@@ -99,12 +98,6 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectjrt.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.ganyo</groupId>
-			<artifactId>gcm-server</artifactId>
-			<version>${gcm.server.version}</version>
 		</dependency>
 
         <dependency>
@@ -217,37 +210,6 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<!-- Plugin that gives ability to generate your projects site -->
-				<artifactId>maven-site-plugin</artifactId>
-				<version>${maven-site-plugin.version}</version>
-				<configuration>
-					<!-- Reports that will be displayed on a generated site -->
-					<reportPlugins>
-						<!-- Produces a cross-reference of the project's sources. This is useful
-                            for other reports like PMD or Checkstyle. When this plugin is used with
-                            checkstyle you can see code that produces style warning/error in the report. -->
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-jxr-plugin</artifactId>
-							<version>${maven-jxr-plugin.version}</version>
-							<configuration>
-								<aggregate>true</aggregate>
-							</configuration>
-						</plugin>
-						<!-- Checks projects code conventions -->
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-checkstyle-plugin</artifactId>
-							<version>${maven-checkstyle-plugin.version}</version>
-							<configuration>
-								<configLocation>/media/levik/data/work/jiranotificator/check_style.xml</configLocation>
-							</configuration>
-						</plugin>
-					</reportPlugins>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 	<repositories>
@@ -258,10 +220,6 @@
 		<repository>
 			<id>http://maven.xwiki.org</id>
 			<url>http://maven.xwiki.org/externals</url>
-		</repository>
-		<repository>
-			<id>gcm-server-repository</id>
-			<url>https://raw.githubusercontent.com/slorber/gcm-server-repository/master/releases/</url>
 		</repository>
 	</repositories>
 </project>

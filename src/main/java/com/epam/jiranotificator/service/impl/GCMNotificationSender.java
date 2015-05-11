@@ -1,63 +1,94 @@
 package com.epam.jiranotificator.service.impl;
 
+import com.atlassian.jira.rest.client.api.domain.BasicPriority;
 import com.atlassian.jira.rest.client.api.domain.Issue;
+import com.epam.jiranotificator.dto.Message;
 import com.epam.jiranotificator.exception.GCMException;
 import com.epam.jiranotificator.service.GCMSender;
-import com.epam.jiranotificator.utils.StringUtils;
-import com.google.android.gcm.server.Message;
-import com.google.android.gcm.server.MulticastResult;
-import com.google.android.gcm.server.Sender;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.List;
 
 @Service("gcmNotificationSender")
 public class GCMNotificationSender implements GCMSender {
 
     private static final Logger LOG = LoggerFactory.getLogger(GCMNotificationSender.class);
 
+    private static final String X_PUSHBOTS_APPID = "X-PUSHBOTS-APPID";
+    private static final String X_PUSHBOTS_SECRET = "X-PUSHBOTS-SECRET";
+    private static final String CONTENT_TYPE = "Content-Type";
+    private static final int HTTP_OK = 200;
+    public static final String POINT = "] ->";
+    public static final String COMA = ",";
+    public static final String BRACKETS = "[";
+
+    private final String host;
+    private final String contentType;
+    private final String xPushbotsAppid;
+    private final String xPushbotsSecret;
+
     @Autowired
-    @Qualifier("gcmSender")
-    private Sender sender;
+    private HttpClient httpClient;
 
-    private static final String MESSAGE_KEY = "message";
 
-    private final List<String> regIds;
-    private final int timeToLive;
-    private final int retries;
-
-    public GCMNotificationSender(final String regIds, final int timeToLive, final int retries) {
-        this.timeToLive = timeToLive;
-        this.retries = retries;
-        this.regIds = StringUtils.splitToList(regIds);
+    public GCMNotificationSender(final String host, final String contentType, final String xPushbotsAppid, final String xPushbotsSecret) {
+        this.host = host;
+        this.contentType = contentType;
+        this.xPushbotsAppid = xPushbotsAppid;
+        this.xPushbotsSecret = xPushbotsSecret;
     }
 
     @Override
     public void send(final Issue issue) {
+        HttpPost post = null;
         LOG.debug("initialized message with issue " + issue.getKey());
-        final String messageText = messageHelper(issue);
-        LOG.debug("message is  " + messageText);
-        final Message message = new Message.Builder().timeToLive(timeToLive)
-                .delayWhileIdle(true).addData(MESSAGE_KEY, messageText).build();
-        try {
+        final Message message = new Message(messageHelper(issue));
+        LOG.debug("message is  " + message.toString());
 
-            final MulticastResult result = sender.send(message, regIds, retries);
+        try{
+            post = new HttpPost(host);
 
-            LOG.debug("send message to gcm, result is " + result);
-        } catch (IOException exe) {
-            final String errorMessage = "Can't send gcm message due to error " + exe.getMessage();
-            LOG.debug(errorMessage);
-            throw new GCMException(errorMessage, exe);
+            post.setHeader(X_PUSHBOTS_APPID, xPushbotsAppid);
+            post.setHeader(X_PUSHBOTS_SECRET, xPushbotsSecret);
+            post.setHeader(CONTENT_TYPE, contentType);
+
+            try {
+                final String jsonMessage = new ObjectMapper().writeValueAsString(message);
+                post.setEntity(new StringEntity(jsonMessage, ContentType.create(contentType)));
+                final HttpResponse response = httpClient.execute(post);
+
+                if (response.getStatusLine().getStatusCode() != HTTP_OK){
+                    LOG.error("Can't send message, response " + response.toString() + " , to issue " + issue.getKey());
+                    return ;
+                }
+
+                LOG.debug("send message to gcm, result is " + response.toString());
+            } catch (IOException exe) {
+                final String errorMessage = "Can't send gcm message due to error " + exe.getMessage();
+                LOG.debug(errorMessage);
+                throw new GCMException(errorMessage, exe);
+            }
+        }finally {
+            if (post != null){
+                post.releaseConnection();
+            }
         }
-
     }
 
-    private String messageHelper(final Issue issue){
-        return "Hello!!!";
+    private String messageHelper(final Issue issue) {
+        final BasicPriority priority = issue.getPriority();
+        if (priority != null) {
+            return BRACKETS + issue.getKey() + COMA + priority.getName() + POINT + issue.getSummary();
+        }
+        return BRACKETS + issue.getKey() + POINT + issue.getSummary();
     }
 }
