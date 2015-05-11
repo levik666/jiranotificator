@@ -26,8 +26,7 @@ public class GCMNotificationSender implements GCMSender {
     private static final String X_PUSHBOTS_APPID = "X-PUSHBOTS-APPID";
     private static final String X_PUSHBOTS_SECRET = "X-PUSHBOTS-SECRET";
     private static final String CONTENT_TYPE = "Content-Type";
-    private static final String ACCEPT = "Accept";
-    private static final String MESSAGE = "message";
+    private static final int HTTP_OK = 200;
     public static final String POINT = "] ->";
     public static final String COMA = ",";
     public static final String BRACKAT = "[";
@@ -67,7 +66,7 @@ public class GCMNotificationSender implements GCMSender {
                 post.setEntity(new StringEntity(jsonMessage, ContentType.create(contentType)));
                 final HttpResponse response = httpClient.execute(post);
 
-                if (response.getStatusLine().getStatusCode() != 200){
+                if (response.getStatusLine().getStatusCode() != HTTP_OK){
                     LOG.error("Can't send message, response " + response.toString() + " , to issue " + issue.getKey());
                     return ;
                 }
