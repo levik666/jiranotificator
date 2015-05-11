@@ -29,7 +29,7 @@ public class GCMNotificationSender implements GCMSender {
     private static final int HTTP_OK = 200;
     public static final String POINT = "] ->";
     public static final String COMA = ",";
-    public static final String BRACKAT = "[";
+    public static final String BRACKETS = "[";
 
     private final String host;
     private final String contentType;
@@ -87,8 +87,8 @@ public class GCMNotificationSender implements GCMSender {
     private String messageHelper(final Issue issue) {
         final BasicPriority priority = issue.getPriority();
         if (priority != null) {
-            return BRACKAT + issue.getKey() + COMA + priority.getName() + POINT + issue.getSummary();
+            return BRACKETS + issue.getKey() + COMA + priority.getName() + POINT + issue.getSummary();
         }
-        return BRACKAT + issue.getKey() + POINT + issue.getSummary();
+        return BRACKETS + issue.getKey() + POINT + issue.getSummary();
     }
 }
