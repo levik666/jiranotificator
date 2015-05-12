@@ -24,7 +24,7 @@ public class NotificationInterceptor {
 	private static final Logger LOG = LoggerFactory.getLogger(NotificationInterceptor.class);
 	
 	@Autowired
-    JiraEventPublisher jiraEventPublisher;
+    private JiraEventPublisher jiraEventPublisher;
 
     @Pointcut("execution(* *(..))")
     public void isExceptionThrown() {}
