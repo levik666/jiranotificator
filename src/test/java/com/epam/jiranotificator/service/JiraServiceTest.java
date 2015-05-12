@@ -3,7 +3,6 @@ package com.epam.jiranotificator.service;
 import com.atlassian.jira.rest.client.api.domain.Issue;
 import com.epam.jiranotificator.exception.JiraException;
 import com.epam.jiranotificator.service.impl.JiraService;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -18,7 +17,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-@Ignore
 public class JiraServiceTest {
 
     private String NULL_PASSWORD = "password='null'";
