@@ -1,4 +1,0 @@
-Jira Notificator
-
-email - jiranotific@gmail.com
-pass: rt6D@opY
