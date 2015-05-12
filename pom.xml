@@ -227,7 +227,6 @@
 				<executions>
 					<execution>
 						<configuration>
-							<addClasspath>true</addClasspath>
 							<mainClass>com.epam.jiranotificator.Application</mainClass>
 							<!-- Optional -->
 							<onejarVersion>0.97</onejarVersion>
