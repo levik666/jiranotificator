@@ -2,6 +2,7 @@ package com.epam.jiranotificator.configuration.interceptor;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -12,6 +13,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
+@Ignore
 public class NotificationInterceptorTest {
 
     private static final String TEST_NAME = "test_name";

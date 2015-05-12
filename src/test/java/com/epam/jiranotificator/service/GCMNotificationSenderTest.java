@@ -3,6 +3,7 @@ package com.epam.jiranotificator.service;
 import com.atlassian.jira.rest.client.api.domain.Issue;
 import com.epam.jiranotificator.exception.GCMException;
 import com.epam.jiranotificator.service.impl.GCMNotificationSender;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -20,6 +21,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
+@Ignore
 public class GCMNotificationSenderTest {
 
     private final String TICKET_NUMBER = "test-1234";
@@ -28,9 +30,9 @@ public class GCMNotificationSenderTest {
     private final int timeToLive = 30;
     private final int retries = 5;
 
-    /*@Spy
+    @Spy
     @InjectMocks
-    private GCMNotificationSender gcmNotificationSender = new GCMNotificationSender(regIds, timeToLive, retries);
+    private GCMNotificationSender gcmNotificationSender = new GCMNotificationSender("", "", "", "");
 
     @Test
     public void shouldSuccessfulSendMessage() {
@@ -53,7 +55,7 @@ public class GCMNotificationSenderTest {
         when(issue.getKey()).thenReturn(TICKET_NUMBER);
         doThrow(new GCMException("Can't send", new Throwable())).when(gcmNotificationSender).send(issue);
         gcmNotificationSender.send(issue);
-    }*/
+    }
 
 /*    @Test(expected = GCMException.class)
     public void shouldThrowExceptionWhenPerformSendMessage() throws IOException {
