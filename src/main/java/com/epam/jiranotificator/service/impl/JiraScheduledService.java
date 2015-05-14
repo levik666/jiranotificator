@@ -23,7 +23,7 @@ public class JiraScheduledService implements ScheduledService {
     @Autowired
     private JiraService jiraService;
     @Autowired
-    private MemoryCacheService memoryCacheService;
+    private MemoryCacheService<Issue> issueCacheService;
     @Autowired
     private EventPublisher eventPublisher;
     @Autowired
@@ -38,17 +38,17 @@ public class JiraScheduledService implements ScheduledService {
         final Set<Issue> issues = jiraService.getIssues();
         for(final Issue issue : issues){
             final String ticketNumber = issue.getKey();
-            if (routingJiraIssueService.isSendNotification(issue)){
+            //if (routingJiraIssueService.isSendNotification(issue)){
                 LOG.debug("Issue [" + ticketNumber + "] found.");
-                final Issue cacheIssue = memoryCacheService.get(ticketNumber);
+                final Issue cacheIssue = issueCacheService.get(ticketNumber);
                 if (cacheIssue == null){
                     eventPublisher.publish(issue);
-                    memoryCacheService.put(ticketNumber, issue);
+                    issueCacheService.put(ticketNumber, issue);
                     LOG.debug("Publish event and add to cache issue [" + ticketNumber + "] ");
                     continue;
                 }
                 LOG.debug("Issue [" + ticketNumber + "] available in cache.");
-            }
+            //}
             LOG.debug("Issue [" + ticketNumber + "] do nothing due to lover priority");
         }
         final DateTime endTime = new DateTime();

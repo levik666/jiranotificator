@@ -33,6 +33,12 @@
         <constructor-arg name="size" value="${cache.size}" />
     </bean>
 
+    <bean id = "emailCacheService" class="com.epam.jiranotificator.service.impl.EmailCacheService">
+        <constructor-arg name="duration" value="${cache.email.duration}" />
+        <constructor-arg name="unit" type="java.util.concurrent.TimeUnit" value="${cache.email.timeUnit}"/>
+        <constructor-arg name="size" value="${cache.email.size}" />
+    </bean>
+
     <bean id = "httpClient" class="org.apache.http.impl.client.DefaultHttpClient"/>
 
     <bean id = "gcmNotificationSender" class="com.epam.jiranotificator.service.impl.GCMNotificationSender">

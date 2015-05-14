@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 
 import com.epam.jiranotificator.configuration.annotations.AlertNotification;
+import com.epam.jiranotificator.service.MemoryCacheService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -26,6 +27,9 @@ public class NotificationInterceptor {
 	@Autowired
     private JiraEventPublisher jiraEventPublisher;
 
+    @Autowired
+    private MemoryCacheService<String> emailCacheService;
+
     @Pointcut("execution(* *(..))")
     public void isExceptionThrown() {}
 
@@ -40,6 +44,14 @@ public class NotificationInterceptor {
         final AlertNotification alertNotification = method.getAnnotation(AlertNotification.class);
 
         final String subject = alertNotification.name();
+        final String key = emailCacheService.get(subject);
+
+        if (key != null){
+            LOG.debug("Notification with this subject was sent, wait next day : " + subject);
+            return ;
+        }
+
+        LOG.debug("Prepared notification with subject " + subject);
 
         final Signature signature = joinPoint.getSignature();
         final String methodName = signature.getName();
@@ -52,8 +64,9 @@ public class NotificationInterceptor {
                 " the exception is: " + exe.getMessage();
 
         LOG.error(message);
-	    
+
 		jiraEventPublisher.publish(subject, message);
+        emailCacheService.put(subject, methodName);
         LOG.debug("Send mail with error message: " + message);
     }
 

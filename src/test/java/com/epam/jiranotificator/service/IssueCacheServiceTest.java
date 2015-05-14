@@ -29,11 +29,11 @@ public class IssueCacheServiceTest {
     private static final long SIZE = 5;
     private static final TimeUnit TIME_UNIT_SECONDS = TimeUnit.SECONDS;
 
-    private MemoryCacheService memoryCacheService = new IssueCacheService(DURATION, TIME_UNIT_SECONDS, SIZE);
+    private MemoryCacheService<Issue> memoryCacheService = new IssueCacheService(DURATION, TIME_UNIT_SECONDS, SIZE);
 
     @Test
     public void shouldSuccessfulUseDefaultContractorPutDataToCacheAndGetIt() {
-        final MemoryCacheService memoryCacheService = new IssueCacheService();
+        final MemoryCacheService<Issue> memoryCacheService = new IssueCacheService();
         memoryCacheService.put(TEST_KEY, issue);
 
         for (int i = 0; i <= 5; i++) {
@@ -44,7 +44,7 @@ public class IssueCacheServiceTest {
 
     @Test
     public void shouldAddMoreElementThanSizeAndTryToPerformNotAddedKey() {
-        final MemoryCacheService memoryCacheService = new IssueCacheService();
+        final MemoryCacheService<Issue> memoryCacheService = new IssueCacheService();
         for(int i = 0; i <= 6; i++){
             memoryCacheService.put(""+i, issue);
         }
@@ -57,7 +57,7 @@ public class IssueCacheServiceTest {
 
     @Test
     public void shouldAddMoreElementThanSizeTryToPerformTheThreeKey() {
-        final MemoryCacheService memoryCacheService = new IssueCacheService();
+        final MemoryCacheService<Issue> memoryCacheService = new IssueCacheService();
         for(int i = 0; i <= 6; i++){
             memoryCacheService.put(""+i, issue);
         }
