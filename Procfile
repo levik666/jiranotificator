@@ -1,0 +1,1 @@
+web:    java -cp -jar target/jiranotificator-1.0-SNAPSHOT.one-jar.jar
