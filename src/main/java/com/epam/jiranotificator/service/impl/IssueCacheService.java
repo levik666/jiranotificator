@@ -11,7 +11,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class IssueCacheService implements MemoryCacheService {
+public class IssueCacheService implements MemoryCacheService<Issue> {
 
     private static final long DURATION = 30;
     private static final long SIZE = 5;

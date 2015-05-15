@@ -2,11 +2,10 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="
-      http://www.springframework.org/schema/beans
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
       http://www.springframework.org/schema/beans/spring-beans.xsd
       http://www.springframework.org/schema/context
-      http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+      http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
     <bean class = "com.epam.jiranotificator.configuration.postprocessor.PasswordEncodeAnnotationBeanPostProcessor"/>
 
@@ -15,6 +14,7 @@
     <context:component-scan base-package="com.epam.jiranotificator.service" />
     <context:component-scan base-package="com.epam.jiranotificator.controller" />
     <context:component-scan base-package="com.epam.jiranotificator.configuration" />
+    <context:component-scan base-package="com.epam.jiranotificator.configuration.security"/>
 
     <aop:aspectj-autoproxy />
 
@@ -31,6 +31,12 @@
         <constructor-arg name="duration" value="${cache.duration}" />
         <constructor-arg name="unit" type="java.util.concurrent.TimeUnit" value="${cache.timeUnit}"/>
         <constructor-arg name="size" value="${cache.size}" />
+    </bean>
+
+    <bean id = "emailCacheService" class="com.epam.jiranotificator.service.impl.EmailCacheService">
+        <constructor-arg name="duration" value="${cache.email.duration}" />
+        <constructor-arg name="unit" type="java.util.concurrent.TimeUnit" value="${cache.email.timeUnit}"/>
+        <constructor-arg name="size" value="${cache.email.size}" />
     </bean>
 
     <bean id = "httpClient" class="org.apache.http.impl.client.DefaultHttpClient"/>
