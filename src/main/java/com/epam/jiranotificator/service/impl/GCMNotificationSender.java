@@ -84,6 +84,42 @@ public class GCMNotificationSender implements GCMSender {
         }
     }
 
+    @Override
+    public void send(final String pushMessage) {
+        HttpPost post = null;
+        final Message message = new Message(pushMessage);
+        LOG.debug("message is  " + message);
+
+        try{
+            post = new HttpPost(host);
+
+            post.setHeader(X_PUSHBOTS_APPID, xPushbotsAppid);
+            post.setHeader(X_PUSHBOTS_SECRET, xPushbotsSecret);
+            post.setHeader(CONTENT_TYPE, contentType);
+
+            try {
+                final String jsonMessage = new ObjectMapper().writeValueAsString(message);
+                post.setEntity(new StringEntity(jsonMessage, ContentType.create(contentType)));
+                final HttpResponse response = httpClient.execute(post);
+
+                if (response.getStatusLine().getStatusCode() != HTTP_OK){
+                    LOG.error("Can't send message, response " + response.toString());
+                    return ;
+                }
+
+                LOG.debug("send message to gcm, result is " + response.toString());
+            } catch (IOException exe) {
+                final String errorMessage = "Can't send gcm message due to error " + exe.getMessage();
+                LOG.debug(errorMessage);
+                throw new GCMException(errorMessage, exe);
+            }
+        }finally {
+            if (post != null){
+                post.releaseConnection();
+            }
+        }
+    }
+
     private String messageHelper(final Issue issue) {
         final BasicPriority priority = issue.getPriority();
         if (priority != null) {
