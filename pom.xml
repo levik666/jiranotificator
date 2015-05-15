@@ -209,7 +209,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
+			<!--<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
 					<execution>
@@ -237,7 +237,7 @@
 						<version>${ant-junit.version}</version>
 					</dependency>
 				</dependencies>
-			</plugin>
+			</plugin>-->
 			<plugin>
 				<groupId>org.dstovall</groupId>
 				<artifactId>onejar-maven-plugin</artifactId>
