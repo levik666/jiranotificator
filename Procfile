@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT -jar target/jiranotificator-1.0-SNAPSHOT.one-jar.jar
