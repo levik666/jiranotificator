@@ -1,1 +1,1 @@
-web:    java -cp -jar target/classes:target/dependency/jiranotificator-1.0-SNAPSHOT.one-jar.jar
+web:    java -cp -jar target/classes:target/dependency/com/epam/jiranotificator Application
