@@ -1,1 +1,1 @@
-web:    java -cp target/classes:target/dependency/com/epam/jiranotificator Application
+web: java -Dserver.port=$PORT -jar target/jiranotificator-1.0-SNAPSHOT.one-jar.jar
