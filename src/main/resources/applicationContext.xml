@@ -9,8 +9,6 @@
 
     <bean class = "com.epam.jiranotificator.configuration.postprocessor.PasswordEncodeAnnotationBeanPostProcessor"/>
 
-    <context:property-placeholder location="classpath:jira.properties" />
-
     <context:component-scan base-package="com.epam.jiranotificator.service" />
     <context:component-scan base-package="com.epam.jiranotificator.controller" />
     <context:component-scan base-package="com.epam.jiranotificator.configuration" />
@@ -19,44 +17,44 @@
     <aop:aspectj-autoproxy />
 
     <bean id = "jiraService" class="com.epam.jiranotificator.service.impl.JiraService">
-        <constructor-arg name="login" value="${jira.login}" />
-        <constructor-arg name="password" value="${jira.password}" />
-        <constructor-arg name="url" value="${jira.url}" />
-        <constructor-arg name="query" value="${jira.query}" />
+        <constructor-arg name="login" value="${JIRA_LOGIN}" />
+        <constructor-arg name="password" value="${JIRA_PASSWORD}" />
+        <constructor-arg name="url" value="${JIRA_URL}" />
+        <constructor-arg name="query" value="${JIRA_QUERY}" />
     </bean>
 
     <bean id = "jiraRestClientFactory" class = "com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory" />
 
     <bean id = "issueCacheService" class="com.epam.jiranotificator.service.impl.IssueCacheService">
-        <constructor-arg name="duration" value="${cache.duration}" />
-        <constructor-arg name="unit" type="java.util.concurrent.TimeUnit" value="${cache.timeUnit}"/>
-        <constructor-arg name="size" value="${cache.size}" />
+        <constructor-arg name="duration" value="${CACHE_DURATION}" />
+        <constructor-arg name="unit" type="java.util.concurrent.TimeUnit" value="${CACHE_TIMEUNIT}"/>
+        <constructor-arg name="size" value="${CACHE_SIZE}" />
     </bean>
 
     <bean id = "emailCacheService" class="com.epam.jiranotificator.service.impl.EmailCacheService">
-        <constructor-arg name="duration" value="${cache.email.duration}" />
-        <constructor-arg name="unit" type="java.util.concurrent.TimeUnit" value="${cache.email.timeUnit}"/>
-        <constructor-arg name="size" value="${cache.email.size}" />
+        <constructor-arg name="duration" value="${CACHE_EMAIL_DURATION}" />
+        <constructor-arg name="unit" type="java.util.concurrent.TimeUnit" value="${CACHE_EMAIL_TIMEUNIT}"/>
+        <constructor-arg name="size" value="${CACHE_EMAIL_SIZE}" />
     </bean>
 
     <bean id = "httpClient" class="org.apache.http.impl.client.DefaultHttpClient"/>
 
     <bean id = "gcmNotificationSender" class="com.epam.jiranotificator.service.impl.GCMNotificationSender">
-        <constructor-arg name="host" value="${gcm.host}"/>
-        <constructor-arg name="contentType" value="${gcm.content_type}" />
-        <constructor-arg name="xPushbotsAppid" value="${gcm.x_pushbots_appid}" />
-        <constructor-arg name="xPushbotsSecret" value="${gcm.x_pushbots_secret}" />
+        <constructor-arg name="host" value="${GCM_HOST}"/>
+        <constructor-arg name="contentType" value="${GCM_CONTENT_TYPE}" />
+        <constructor-arg name="xPushbotsAppid" value="${GCM_X_PUSHBOTS_APPID}" />
+        <constructor-arg name="xPushbotsSecret" value="${GCM_X_PUSHBOTS_SECRET}" />
     </bean>
 
     <bean id= "routingJiraIssueService" class="com.epam.jiranotificator.service.impl.RoutingJiraIssueService">
-        <constructor-arg name="status" value="${status}"/>
+        <constructor-arg name="status" value="${STATUS}"/>
     </bean>
     
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
 		<property name="port" value="587" />
-		<property name="username" value="${jira.alert.emailLogin}"/>
-		<property name="password" value="${jira.alert.emailPassword}" />
+		<property name="username" value="${EMAIL_LOGIN}"/>
+		<property name="password" value="${EMAIL_PASSWORD}" />
 	 
 		<property name="javaMailProperties">
 		   <props>
@@ -69,8 +67,8 @@
 	
     <bean id = "emailSender" class="com.epam.jiranotificator.service.impl.EmailSender">
 		<property name="mailSender" ref="mailSender" />
-        <property name="emailFrom" value="${jira.alert.emailFrom}" />
-        <property name="emailsTo" value="${jira.alert.emailsTo}" />
+        <property name="emailFrom" value="${EMAIL_LOGIN}" />
+        <property name="emailsTo" value="${EMAILS_TO}" />
     </bean>
 
 </beans>

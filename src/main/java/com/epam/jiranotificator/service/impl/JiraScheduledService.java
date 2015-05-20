@@ -30,7 +30,7 @@ public class JiraScheduledService implements ScheduledService {
     private RoutingIssueService routingJiraIssueService;
 
     @Override
-    @Scheduled(cron = "${cron.expression}")
+    @Scheduled(cron = "${CRON_EXPRESSION}")
     public void perform(){
         final DateTime startTime = new DateTime();
         LOG.debug("Perform jiraScheduledService startTime : " + startTime);
