@@ -15,9 +15,9 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 
     private static final String USER = "USER";
 
-    @Value("${jira.alert.emailLogin}")
+    @Value("${EMAIL_LOGIN}")
     private String login;
-    @Value("${jira.alert.emailPassword}")
+    @Value("${EMAIL_PASSWORD}")
     private String password;
 
     @Autowired
