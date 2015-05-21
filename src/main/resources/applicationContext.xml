@@ -9,12 +9,13 @@
 
     <bean class = "com.epam.jiranotificator.configuration.postprocessor.PasswordEncodeAnnotationBeanPostProcessor"/>
 
+    <aop:aspectj-autoproxy />
+
     <context:component-scan base-package="com.epam.jiranotificator.service" />
     <context:component-scan base-package="com.epam.jiranotificator.controller" />
     <context:component-scan base-package="com.epam.jiranotificator.configuration" />
     <context:component-scan base-package="com.epam.jiranotificator.configuration.security"/>
 
-    <aop:aspectj-autoproxy />
 
     <bean id = "jiraService" class="com.epam.jiranotificator.service.impl.JiraService">
         <constructor-arg name="login" value="${JIRA_LOGIN}" />
