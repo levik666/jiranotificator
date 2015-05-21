@@ -1,1 +1,1 @@
-web: with_jdwp java -Dserver.port=$PORT -jar target/jiranotificator-1.0-SNAPSHOT.one-jar.jar
+web: java -Dserver.port=$PORT -jar target/jiranotificator-1.0-SNAPSHOT.one-jar.jar
